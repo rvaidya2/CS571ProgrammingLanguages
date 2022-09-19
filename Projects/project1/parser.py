@@ -2,7 +2,7 @@ import re # for tokenizer and output list conversion
 from collections import namedtuple #for tokenizer
 import sys
 
-inputString = sys.stdin.readline()
+inputString = sys.argv[3]
 newList = []
 
 
