@@ -32,9 +32,9 @@
             (cons (car employees)(dept-employees dept (cdr employees)))
             (dept-employees dept (cdr employees))))))
 
-(check-equal? (dept-employees 'ece EMPLOYEES) '((joan 23 ece 110000.00)))
-(check-equal? (dept-employees 'cs EMPLOYEES)'((tom 33 cs 85000.00)(bill 29 cs 69500.00)(sue 19 cs 22000.00)))
-(check-equal? (dept-employees 'ce EMPLOYEES) '())
+;;(check-equal? (dept-employees 'ece EMPLOYEES) '((joan 23 ece 110000.00)))
+;;(check-equal? (dept-employees 'cs EMPLOYEES)'((tom 33 cs 85000.00)(bill 29 cs 69500.00)(sue 19 cs 22000.00)))
+;;(check-equal? (dept-employees 'ce EMPLOYEES) '())
 
 ;; #2: 5-points
 ;;return list of names of employees belonging to department dept
@@ -48,9 +48,9 @@
             (cons (caar employees)(dept-employees-names dept (cdr employees)))
             (dept-employees-names dept (cdr employees))))))
 
-(check-equal? (dept-employees-names 'ece EMPLOYEES) '(joan))
-(check-equal? (dept-employees-names 'cs EMPLOYEES) '(tom bill sue))
-(check-equal? (dept-employees-names 'ce EMPLOYEES) '())
+;;(check-equal? (dept-employees-names 'ece EMPLOYEES) '(joan))
+;;(check-equal? (dept-employees-names 'cs EMPLOYEES) '(tom bill sue))
+;;(check-equal? (dept-employees-names 'ce EMPLOYEES) '())
 
 ;; #3: 15-points
 ;;Given list indexes containing 0-based indexes and a list possibly
@@ -67,20 +67,20 @@
                (list-access(cdr indexes)(list-ref list (car indexes))))
            'nil)))
 
-(check-equal? (list-access '(1) '(a b c)) 'b)
-(check-equal? (list-access '(2) '(a b (c))) '(c))
-(check-equal? (list-access '(2 0) '(a b (c))) 'c)
-(check-equal? (list-access '(3) '(a b (c))) 'nil)
-(check-equal? (list-access '(2 1) '(a b (c))) 'nil)
-(check-equal? (list-access '() '((1 2 3) (4 (5 6 (8)))) )
- 	      '((1 2 3) (4 (5 6 (8)))))
-(check-equal? (list-access '(1) '((1 2 3) (4 (5 6 (8)))) )
-	      '(4 (5 6 (8))))
-(check-equal? (list-access '( 1 1 2) '((1 2 3) (4 (5 6 (8)))) )
-	      '(8))
-(check-equal? (list-access '( 1 1 2 0) '((1 2 3) (4 (5 6 (8)))) )
-	      '8)
-(check-equal? (list-access '(0 1) '((1))) 'nil)
+;;(check-equal? (list-access '(1) '(a b c)) 'b)
+;;(check-equal? (list-access '(2) '(a b (c))) '(c))
+;;(check-equal? (list-access '(2 0) '(a b (c))) 'c)
+;;(check-equal? (list-access '(3) '(a b (c))) 'nil)
+;;(check-equal? (list-access '(2 1) '(a b (c))) 'nil)
+;;(check-equal? (list-access '() '((1 2 3) (4 (5 6 (8)))) )
+;;	      '((1 2 3) (4 (5 6 (8)))))
+;;(check-equal? (list-access '(1) '((1 2 3) (4 (5 6 (8)))) )
+;;	      '(4 (5 6 (8))))
+;;(check-equal? (list-access '( 1 1 2) '((1 2 3) (4 (5 6 (8)))) )
+;;	      '(8))
+;;(check-equal? (list-access '( 1 1 2 0) '((1 2 3) (4 (5 6 (8)))) )
+;;	      '8)
+;;(check-equal? (list-access '(0 1) '((1))) 'nil)
 
 ;; #4: 15-points
 ;;return sum of salaries for all employees
@@ -93,8 +93,8 @@
         (+ (list-ref (car employees)3)
            (employees-salary-sum (cdr employees))))))
 
-(check-equal? (employees-salary-sum EMPLOYEES) 344700.00)
-(check-equal? (employees-salary-sum '()) 0)
+;;(check-equal? (employees-salary-sum EMPLOYEES) 344700.00)
+;;(check-equal? (employees-salary-sum '()) 0)
 
 ;; #5: 15-points
 ;;return list of pairs giving name and salary of employees belonging to
@@ -105,13 +105,13 @@
 (define (dept-employees-names-salaries dept employees)
   (map (lambda (y)(list(first y)(last y)))(filter (lambda(x)(if(equal? (caddr x) dept)#t #f))employees)))
 
-(check-equal? (dept-employees-names-salaries 'ece EMPLOYEES) '((joan 110000.00)))
-(check-equal? (dept-employees-names-salaries 'cs EMPLOYEES)
-	      '((tom 85000.00)
-		(bill 69500.00)
-		(sue 22000.00)
- 		))
-(check-equal? (dept-employees-names-salaries 'ce EMPLOYEES) '())
+;;(check-equal? (dept-employees-names-salaries 'ece EMPLOYEES) '((joan 110000.00)))
+;;(check-equal? (dept-employees-names-salaries 'cs EMPLOYEES)
+;;	      '((tom 85000.00)
+;;		(bill 69500.00)
+;;		(sue 22000.00)
+ ;;		))
+;;(check-equal? (dept-employees-names-salaries 'ce EMPLOYEES) '())
 
 ;; #6: 15-points
 ;;return average salary of all employees; 0 if employees empty
@@ -123,8 +123,8 @@
       (/(foldl + 0(map last employees)) (length employees))
       '0))
 
-(check-equal? (employees-average-salary EMPLOYEES) (/ 344700.00 5))
-(check-equal? (employees-average-salary '()) 0)
+;;(check-equal? (employees-average-salary EMPLOYEES) (/ 344700.00 5))
+;;(check-equal? (employees-average-salary '()) 0)
 
 ;; #7: 20-points
 ;; given an integer or list of nested lists containing integers,
