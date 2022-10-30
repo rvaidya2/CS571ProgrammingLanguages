@@ -45,7 +45,13 @@ test(dept_employees_ce, all(Zs = [[]])) :-
 %%% #2 15-points
 % employees_salary_sum(Employees, Sum): succeeds iff Sum matches sum
 % of salaries of the employees in Employees.  Must be tail-recursive.
-employees_salary_sum(Employees, Sum) :- 'TODO'(Employees, Sum).
+employees_salary_sum(Employees,Sum) :- 
+    employees_salary_sum(Employees,Sum,0).
+employees_salary_sum([], Acc, Acc).
+employees_salary_sum([X|Xs], Sum, Acc):-
+    employee(_,_,_,Salary) = X,
+    SumFinal is Acc + Salary,
+    employees_salary_sum(Xs,Sum,SumFinal).
 
 :-begin_tests(employees_salary_sum).
 test(empty) :-
@@ -71,7 +77,7 @@ test(all) :-
 % an abitrary depth, match Z with the element in List indexed
 % successively by the indexes in Indexes. Match Z with the atom nil if
 % there is no such element.
-list_access(Indexes, List, Z) :- 'TODO'(Indexes, List, Z).
+/*
 
 :- begin_tests(list_access).
 test(index_1, all(Z = [b])) :-
@@ -102,6 +108,7 @@ test(index_1_1_2_0, all(Z = [8])) :-
 test(index_0_1, all(Z = [nil])) :-
     list_access([0, 1], [[1]], Z).
 :- end_tests(list_access).
+
 
 %%% #4 15-points
 % count_non_pairs(List, NNonPairs): NNonPairs matches the # of non-pairs
@@ -238,3 +245,4 @@ test(complex, all(Z = [Clause1 /\ Clause2 /\ Clause3 /\ Clause4])) :-
     clausal_form([Rule1, Rule2, Rule3, Rule4], Z).
 :- end_tests(clausal_form).
 
+*/
