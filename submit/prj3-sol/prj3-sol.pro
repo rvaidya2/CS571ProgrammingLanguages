@@ -16,8 +16,12 @@ employees([ employee(tom, 33, cs, 85000.00),
 % dept_employees(Employees, Dept, DeptEmployees): Given a list
 % Employees of employees and a department Dept match DeptEmployees
 % to the subsequence of Employees having department Dept.
-dept_employees(Employees, Dept, DeptEmployees) :-
-    'TODO'(Employees, Dept, DeptEmployees).
+dept_employees([],_,[]).
+dept_employees([X|Xs], Dept, Zs):-
+    (employee(_,_,Dept,_) = X ->  
+  dept_employees(Xs, Dept, Y), append([X],Y,Zs);
+    dept_employees(Xs,Dept,Zs)).
+
 
 
 :- begin_tests(dept_employees, []).
