@@ -1,6 +1,16 @@
-Name:		XXX
-B-Number:	XXX
-Email:		XXX
+Name:		Rujuta Vivek Vaidya
+B-Number:	B00963799
+Email:		rvaidya2@binghamton.edu
 
-Add text here as needed.
+References:
+Problem 1 - https://zdu.binghamton.edu/cs571/slides/prolog/prolog.html - recursion
+Problem 2 - https://zdu.binghamton.edu/cs571/slides/prolog/prolog.html - tail recursion
+Problem 3 - https://stackoverflow.com/questions/4380624/how-compute-index-of-element-in-a-list (stackoverflow)
+Problem 4 - https://zdu.binghamton.edu/cs571/slides/scheme/scheme.html - scheme not pairs
+Problem 5 - https://zdu.binghamton.edu/cs571/slides/prolog/prolog.html - mod
+Problem 6 - https://stackoverflow.com/questions/13301709/regular-expressions-in-prolog (stackoverflow)
+            https://www.swi-prolog.org/pack/list?p=regex (prolog documentation)
+Problem 7 - project hints.
+
+*For problem 6, if notdet in conc test case, there won't be a warning for conc, similar to kleene.
 
