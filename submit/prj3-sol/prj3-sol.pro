@@ -77,7 +77,15 @@ test(all) :-
 % an abitrary depth, match Z with the element in List indexed
 % successively by the indexes in Indexes. Match Z with the atom nil if
 % there is no such element.
-/*
+
+list_access([], X, X):-
+    !.
+list_access(_, [], nil):-
+    !.
+list_access([Head|Tail], [HeadInner|TailInner], X):- 
+    (Head = 0 -> list_access(Tail,HeadInner,X);
+    H is Head - 1,list_access([H|Tail], TailInner, X)).
+
 
 :- begin_tests(list_access).
 test(index_1, all(Z = [b])) :-
@@ -117,43 +125,47 @@ test(index_0_1, all(Z = [nil])) :-
 % are not processed.
 % The count will be the number of leaves in the tree corresponding to the
 % list structure of List.
-count_non_pairs(List, NNonPairs):- 'TODO'(List, NNonPairs).
+% count_non_pairs(List, NNonPairs):- 'TODO'(List, NNonPairs).
 
-:- begin_tests(count_non_pairs).
-test(empty, nondet) :-
-    count_non_pairs([], 1).
-test(unary_list, nondet) :-
-    count_non_pairs([1], 2).
-test(simple_list, nondet) :-
-    count_non_pairs([1, 2, [], a, []], 6).
-test(nested_list, nondet) :-
-    count_non_pairs([[1, 2, 3], [[a], b, []]], 10).
-test(nested_list_fail, fail) :-
-    count_non_pairs([[1, 2, 3], [[a], b]], 10).
-test(complex, nondet) :-
-    count_non_pairs([[1, f([a, b, c]), h(1)], [[a], b]], 9).
-test(complex_fail, fail) :-
-    count_non_pairs([[1, f([a, b, c]), h(1)], [[a], b]], 8).
-:- end_tests(count_non_pairs).
 
+% :- begin_tests(count_non_pairs).
+% test(empty, nondet) :-
+%     count_non_pairs([], 1).
+% test(unary_list, nondet) :-
+%     count_non_pairs([1], 2).
+% test(simple_list, nondet) :-
+%     count_non_pairs([1, 2, [], a, []], 6).
+% test(nested_list, nondet) :-
+%     count_non_pairs([[1, 2, 3], [[a], b, []]], 10).
+% test(nested_list_fail, fail) :-
+%     count_non_pairs([[1, 2, 3], [[a], b]], 10).
+% test(complex, nondet) :-
+%     count_non_pairs([[1, f([a, b, c]), h(1)], [[a], b]], 9).
+% test(complex_fail, fail) :-
+%     count_non_pairs([[1, f([a, b, c]), h(1)], [[a], b]], 8).
+% :- end_tests(count_non_pairs).
 
 %%% #5 10-points
 % divisible_by(Ints, N, Int): Int is an integer in list of integers Ints
 % which is divisible by N.  Successive Int's are returned on backtracking
 % in the order they occur within list Ints.
 % Hint: use member/2 and the mod operator
-divisible_by(Ints, N, Int) :- 'TODO'(Ints, N, Int).
 
-:- begin_tests(divisible_by).
-test(empty, fail) :-
-    divisible_by([], 2, _).
-test(divisible_by_2, all(Int=[4, -8])) :-
-    divisible_by([4, 7, -9, -8], 2, Int).
-test(divisible_by_5, all(Int=[15, -25, 5])) :-
-    divisible_by([4, 15, -25, -22, 5], 5, Int).
-test(none_divisible_by_3, fail) :-
-    divisible_by([4, 16, -25, -22, 5], 3, _Int).
-:- end_tests(divisible_by).
+
+
+
+% :- begin_tests(divisible_by).
+% test(empty, fail) :-
+%     divisible_by([], 2, _).
+% test(divisible_by_2, all(Int=[4, -8])) :-
+%     divisible_by([4, 7, -9, -8], 2, Int).
+% test(divisible_by_5, all(Int=[15, -25, 5])) :-
+%     divisible_by([4, 15, -25, -22, 5], 5, Int).
+% test(none_divisible_by_3, fail) :-
+%     divisible_by([4, 16, -25, -22, 5], 3, _Int).
+% :- end_tests(divisible_by).
+
+
 
 %%% #6 15-points
 % re_match(Re, List): Regex Re matches all the symbols in List.
@@ -162,56 +174,60 @@ test(none_divisible_by_3, fail) :-
 %   If A and B are Prolog regex's, then so is conc(A, B) representing AB.
 %   If A and B are Prolog regex's, then so is alt(A, B) representing A|B.
 %   If A is a Prolog regex, then so is kleene(A), representing A*.
-re_match(Re, List) :- 'TODO'(Re, List).
 
-:- begin_tests(re_match).
-test(single) :-
-    re_match(a, [a]).
-test(single_fail, fail) :-
-    re_match(a, [b]).
-test(conc) :-
-    re_match(conc(a, b), [a, b]).
-test(conc_fail, fail) :-
-    re_match(conc(a, b), [a, c]).
-test(alt1, nondet) :-
-    re_match(alt(a, b), [a]).
-test(alt2, nondet) :-
-    re_match(alt(a, b), [b]).
-test(alt_fail, fail) :-
-    re_match(alt(a, b), [c]).
-test(kleene_empty, nondet) :-
-    re_match(kleene(a), []).
-test(kleene_single, nondet) :-
-    re_match(kleene(a), [a]).
-test(kleene_multiple, nondet) :-
-    re_match(kleene(a), [a, a, a, a]).
-test(conc_kleene_sym, nondet) :-
-    re_match(conc(kleene(a), b), [a, a, a, a, b]).
-test(kleene_kleene0, nondet) :-
-    re_match(conc(kleene(a), kleene(b)), [a, a, a, a]).
-test(kleene_kleene, nondet) :-
-    re_match(conc(kleene(a), kleene(b)), [a, a, a, a, b, b, b]).
-test(kleene_kleene_fail, fail) :-
-    re_match(conc(kleene(a), kleene(b)), [a, a, a, a, b, b, b, a]).
-test(kleene_conc, nondet) :-
-    re_match(kleene(conc(a, b)), [a, b, a, b, a, b]).
-test(kleene_conc_fail, fail) :-
-    re_match(kleene(conc(a, b)), [a, b, a, b, a, b, a]).
-test(kleene_alt, nondet) :-
-    re_match(kleene(alt(a, b)), [a, a, b, a, b, a, b, b]).
-test(conc_kleene_conc, nondet) :-
-    re_match(conc(a, conc(kleene(b), a)), [a, b, b, b, a]).
-test(conc_kleene0_conc, nondet) :-
-    re_match(conc(a, conc(kleene(b), a)), [a, a]).
-test(conc_kleene_conc_fail, fail) :-
-    re_match(conc(a, conc(kleene(b), a)), [a, b, b, b]).
-test(complex1, nondet) :-
-    re_match(conc(kleene(alt(a, b)), kleene(alt(0, 1))), [a,b,b,a,0,0,1,1]).
-test(complex2, nondet) :-
-    re_match(conc(kleene(alt(a, b)), kleene(alt(0, 1))), [0,0,1,1]).
-test(complex_empty, nondet) :-
-    re_match(conc(kleene(alt(a, b)), kleene(alt(0, 1))), []).
-:- end_tests(re_match).
+
+
+
+
+
+% :- begin_tests(re_match).
+% test(single) :-
+%     re_match(a, [a]).
+% test(single_fail, fail) :-
+%     re_match(a, [b]).
+% test(conc) :-
+%     re_match(conc(a, b), [a, b]).
+% test(conc_fail, fail) :-
+%     re_match(conc(a, b), [a, c]).
+% test(alt1, nondet) :-
+%     re_match(alt(a, b), [a]).
+% test(alt2, nondet) :-
+%     re_match(alt(a, b), [b]).
+% test(alt_fail, fail) :-
+%     re_match(alt(a, b), [c]).
+% test(kleene_empty, nondet) :-
+%     re_match(kleene(a), []).
+% test(kleene_single, nondet) :-
+%     re_match(kleene(a), [a]).
+% test(kleene_multiple, nondet) :-
+%     re_match(kleene(a), [a, a, a, a]).
+% test(conc_kleene_sym, nondet) :-
+%     re_match(conc(kleene(a), b), [a, a, a, a, b]).
+% test(kleene_kleene0, nondet) :-
+%     re_match(conc(kleene(a), kleene(b)), [a, a, a, a]).
+% test(kleene_kleene, nondet) :-
+%     re_match(conc(kleene(a), kleene(b)), [a, a, a, a, b, b, b]).
+% test(kleene_kleene_fail, fail) :-
+%     re_match(conc(kleene(a), kleene(b)), [a, a, a, a, b, b, b, a]).
+% test(kleene_conc, nondet) :-
+%     re_match(kleene(conc(a, b)), [a, b, a, b, a, b]).
+% test(kleene_conc_fail, fail) :-
+%     re_match(kleene(conc(a, b)), [a, b, a, b, a, b, a]).
+% test(kleene_alt, nondet) :-
+%     re_match(kleene(alt(a, b)), [a, a, b, a, b, a, b, b]).
+% test(conc_kleene_conc, nondet) :-
+%     re_match(conc(a, conc(kleene(b), a)), [a, b, b, b, a]).
+% test(conc_kleene0_conc, nondet) :-
+%     re_match(conc(a, conc(kleene(b), a)), [a, a]).
+% test(conc_kleene_conc_fail, fail) :-
+%     re_match(conc(a, conc(kleene(b), a)), [a, b, b, b]).
+% test(complex1, nondet) :-
+%     re_match(conc(kleene(alt(a, b)), kleene(alt(0, 1))), [a,b,b,a,0,0,1,1]).
+% test(complex2, nondet) :-
+%     re_match(conc(kleene(alt(a, b)), kleene(alt(0, 1))), [0,0,1,1]).
+% test(complex_empty, nondet) :-
+%     re_match(conc(kleene(alt(a, b)), kleene(alt(0, 1))), []).
+% :- end_tests(re_match).
 
 %%% #7 20-points
 % clausal_form(PrologRules, Form): given a non-empty list PrologRules
@@ -220,29 +236,27 @@ test(complex_empty, nondet) :-
 % corresponding to each rule in PrologRules, where each clause is a
 % disjunction (represented using the infix \/ operator) of literals with
 % the prefix ~ operator used to indicate negative literals.
-:- op(200, fx, ~). %declare ~ operator
-clausal_form(PrologRules, Form) :- 'TODO'(PrologRules, Form).
 
-:- begin_tests(clausal_form).
-test(single_head, all(Z = [p(a, b)])) :-
-    clausal_form([p(a, b)], Z).
-test(simple_rule, all(Z = [p(a, b) \/ ~q(a, b)])) :-
-    clausal_form([(p(a, b) :- q(a, b))], Z).
-test(rule_with_multi_body,
-     all(Z = [p(a, b) \/ ~q(a, b) \/ ~r(a, b) \/ ~s(x)])) :-
-    clausal_form([(p(a, b) :- q(a, b), r(a, b), s(x))], Z).
-test(multi_rule, all(Z = [p(a, b) /\ q(x, y) /\ r(1)])) :-
-    clausal_form([p(a, b), q(x, y), r(1)], Z).
-test(complex, all(Z = [Clause1 /\ Clause2 /\ Clause3 /\ Clause4])) :-
-    Rule1 = (p(a, b) :- q(b, c), r(a, b), s(x)),
-    Clause1 = p(a, b) \/ ~q(b, c) \/ ~r(a, b) \/ ~s(x),
-    Rule2 = (m(f(X)) :- n(f(X), Y), X is 2*Y),
-    Clause2 = m(f(X)) \/ ~n(f(X), Y) \/ ~(X is 2*Y),
-    Rule3 = append([], Xs, Xs),
-    Clause3 = append([], Xs, Xs),
-    Rule4 = (append([A|As], Ys, [A|Zs]) :- append(As, Ys, Zs)),
-    Clause4 = append([A|As], Ys, [A|Zs]) \/ ~append(As, Ys, Zs),
-    clausal_form([Rule1, Rule2, Rule3, Rule4], Z).
-:- end_tests(clausal_form).
 
-*/
+
+% :- begin_tests(clausal_form).
+% test(single_head, all(Z = [p(a, b)])) :-
+%     clausal_form([p(a, b)], Z).
+% test(simple_rule, all(Z = [p(a, b) \/ ~q(a, b)])) :-
+%     clausal_form([(p(a, b) :- q(a, b))], Z).
+% test(rule_with_multi_body,
+%      all(Z = [p(a, b) \/ ~q(a, b) \/ ~r(a, b) \/ ~s(x)])) :-
+%     clausal_form([(p(a, b) :- q(a, b), r(a, b), s(x))], Z).
+% test(multi_rule, all(Z = [p(a, b) /\ q(x, y) /\ r(1)])) :-
+%     clausal_form([p(a, b), q(x, y), r(1)], Z).
+% test(complex, all(Z = [Clause1 /\ Clause2 /\ Clause3 /\ Clause4])) :-
+%     Rule1 = (p(a, b) :- q(b, c), r(a, b), s(x)),
+%     Clause1 = p(a, b) \/ ~q(b, c) \/ ~r(a, b) \/ ~s(x),
+%     Rule2 = (m(f(X)) :- n(f(X), Y), X is 2*Y),
+%     Clause2 = m(f(X)) \/ ~n(f(X), Y) \/ ~(X is 2*Y),
+%     Rule3 = append([], Xs, Xs),
+%     Clause3 = append([], Xs, Xs),
+%     Rule4 = (append([A|As], Ys, [A|Zs]) :- append(As, Ys, Zs)),
+%     Clause4 = append([A|As], Ys, [A|Zs]) \/ ~append(As, Ys, Zs),
+%     clausal_form([Rule1, Rule2, Rule3, Rule4], Z).
+% :- end_tests(clausal_form).
