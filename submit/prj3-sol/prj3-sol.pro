@@ -127,23 +127,28 @@ test(index_0_1, all(Z = [nil])) :-
 % list structure of List.
 % count_non_pairs(List, NNonPairs):- 'TODO'(List, NNonPairs).
 
+count_non_pairs([],1).
+count_non_pairs([A|B],Fx):-
+    (A = [_|_]-> count_non_pairs(A, X1); X1 is 1),
+    count_non_pairs(B, X2),
+    Fx is X1 + X2.
 
-% :- begin_tests(count_non_pairs).
-% test(empty, nondet) :-
-%     count_non_pairs([], 1).
-% test(unary_list, nondet) :-
-%     count_non_pairs([1], 2).
-% test(simple_list, nondet) :-
-%     count_non_pairs([1, 2, [], a, []], 6).
-% test(nested_list, nondet) :-
-%     count_non_pairs([[1, 2, 3], [[a], b, []]], 10).
-% test(nested_list_fail, fail) :-
-%     count_non_pairs([[1, 2, 3], [[a], b]], 10).
-% test(complex, nondet) :-
-%     count_non_pairs([[1, f([a, b, c]), h(1)], [[a], b]], 9).
-% test(complex_fail, fail) :-
-%     count_non_pairs([[1, f([a, b, c]), h(1)], [[a], b]], 8).
-% :- end_tests(count_non_pairs).
+:- begin_tests(count_non_pairs).
+test(empty, nondet) :-
+    count_non_pairs([], 1).
+test(unary_list, nondet) :-
+    count_non_pairs([1], 2).
+test(simple_list, nondet) :-
+    count_non_pairs([1, 2, [], a, []], 6).
+test(nested_list, nondet) :-
+    count_non_pairs([[1, 2, 3], [[a], b, []]], 10).
+test(nested_list_fail, fail) :-
+    count_non_pairs([[1, 2, 3], [[a], b]], 10).
+test(complex, nondet) :-
+    count_non_pairs([[1, f([a, b, c]), h(1)], [[a], b]], 9).
+test(complex_fail, fail) :-
+    count_non_pairs([[1, f([a, b, c]), h(1)], [[a], b]], 8).
+:- end_tests(count_non_pairs).
 
 %%% #5 10-points
 % divisible_by(Ints, N, Int): Int is an integer in list of integers Ints
