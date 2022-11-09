@@ -57,10 +57,6 @@ testDeptEmployees = do
 comprDeptEmployees :: [Employee] -> Department -> [Employee]
 comprDeptEmployees [] _ = []
 comprDeptEmployees (x) department = [y | y <- x, emplDept y == department]
-                                            
-
-
-
 
 testComprDeptEmployees = do
   assertEq "comprDeptEmployees cs"
@@ -79,7 +75,8 @@ testComprDeptEmployees = do
 -- return the sum of the emplSalary of all the employees in empls.
 -- Restriction: May NOT use recursion or list comprehension.
 employeesSalarySum :: [ Employee ] -> Float
-employeesSalarySum _ = error "TODO"
+employeesSalarySum [] = 0.0
+employeesSalarySum x =  sum (map emplSalary x) 
 
 testEmployeesSalarySum = do
   assertEq "employeesSalarySum all" (employeesSalarySum employees) 344700.0
