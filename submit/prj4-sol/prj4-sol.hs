@@ -55,7 +55,11 @@ testDeptEmployees = do
 -- comprDeptEmployees has same spec as deptEmployees.
 -- Restriction: MUST be implemented using list comprehension.
 comprDeptEmployees :: [Employee] -> Department -> [Employee]
-comprDeptEmployees _ _ = error "TODO"
+comprDeptEmployees [] _ = []
+comprDeptEmployees (x) department = [y | y <- x, emplDept y == department]
+                                            
+
+
 
 
 testComprDeptEmployees = do
