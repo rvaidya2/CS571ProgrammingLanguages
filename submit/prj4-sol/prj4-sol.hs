@@ -91,7 +91,11 @@ testEmployeesSalarySum = do
 -- negative square-root of the discriminant.  Need not handle complex
 -- roots.
 quadraticRoots :: Floating t => t -> t -> t -> (t, t)
-quadraticRoots _ _ _ = error "TODO"
+quadraticRoots a b c = (root1,root2) where
+  discriminant = (b*b) - (4*a*c)
+  x = - b / (2*a)
+  root1 = x + sqrt discriminant / (2*a)
+  root2 = x - sqrt discriminant / (2*a) 
 
 testQuadraticRoots = do
   assertEq "quadraticRoots \"x**2 - 25 = 0\""
