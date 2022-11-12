@@ -202,6 +202,7 @@ testFoldTree = do
 -- list correspond to the elements stored in the tree ordered as per 
 -- an in-order traversal of the tree. 
 -- Restriction: May NOT use recursion.  MUST be implemented using foldTree.
+-- Recursion used try again
 flattenTree :: Tree a -> [a]
 flattenTree (Leaf v) = [v]
 flattenTree (Tree left root right) = flattenTree left ++ [root] ++ flattenTree right
