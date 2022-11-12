@@ -203,7 +203,9 @@ testFoldTree = do
 -- an in-order traversal of the tree. 
 -- Restriction: May NOT use recursion.  MUST be implemented using foldTree.
 flattenTree :: Tree a -> [a]
-flattenTree _ = error "TODO"
+flattenTree (Leaf v) = [v]
+flattenTree (Tree left root right) = flattenTree left ++ [root] ++ flattenTree right
+
 
 testFlattenTree = do
   assertEq "flattenTree Tree Int"
