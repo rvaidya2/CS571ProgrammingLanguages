@@ -115,9 +115,15 @@ testQuadraticRoots = do
 -- #5: 15-points
 -- Given a x (expn x) should return the infinite series
 -- 1 + x + x**2/2! + x**3/3! + x**4/4!
--- expn :: (Floating a)  => a -> [a]
+expn :: Fractional a  => a -> [a]
 -- Hint: use a local auxiliary function
-expn _ = error "TODO"
+-- factorial 0 = 1 
+-- factorial x = x * factorial (x - 1)
+-- factorial x = product [1..x]
+-- powers x = map (x^) [0..]
+-- expn x = zipWith (/) (powers x) 
+
+
 
 -- epsilon equality for floats; does not work if close to 0.0
 floatEq f1 f2 = (abs (f2 - f1)/f1) < 0.0001
@@ -176,7 +182,8 @@ data Tree t = Leaf t
 -- applying the unary leafFn to the value stored within the Leaf node.
 -- May use recursion.
 foldTree :: (t1 -> t -> t1 -> t1) -> (t -> t1) -> Tree t -> t1
-foldTree _ _ _ = error "TODO"
+foldTree treeFn leafFn (Tree x y z) =   treeFn (foldTree treeFn leafFn x) y (foldTree treeFn leafFn z)
+foldTree _ leafFn (Leaf value) = leafFn value
 
 testFoldTree = do
   assertEq "foldTree (left + v + right) (2*v)"
@@ -202,10 +209,10 @@ testFoldTree = do
 -- list correspond to the elements stored in the tree ordered as per 
 -- an in-order traversal of the tree. 
 -- Restriction: May NOT use recursion.  MUST be implemented using foldTree.
--- Recursion used try again
+
 flattenTree :: Tree a -> [a]
 flattenTree (Leaf v) = [v]
-flattenTree (Tree left root right) = flattenTree left ++ [root] ++ flattenTree right
+flattenTree tree = foldTree (\left root right -> left ++ root : right) (\e -> [e]) (tree)
 
 
 testFlattenTree = do
@@ -234,7 +241,7 @@ testFlattenTree = do
 -- of all lists in tree.
 -- Restriction: May NOT use recursion. MUST be implemented using flattenTree.
 catenateTreeLists :: Tree [a] -> [a]
-catenateTreeLists _ = error "TODO"
+catenateTreeLists tree = foldl (++) [] (flattenTree tree)
 
 testCatenateTreeLists = do
   assertEq "catenateTreeLists Tree [Int]"
