@@ -115,15 +115,14 @@ testQuadraticRoots = do
 -- #5: 15-points
 -- Given a x (expn x) should return the infinite series
 -- 1 + x + x**2/2! + x**3/3! + x**4/4!
-expn :: Fractional a  => a -> [a]
 -- Hint: use a local auxiliary function
--- factorial 0 = 1 
--- factorial x = x * factorial (x - 1)
--- factorial x = product [1..x]
--- powers x = map (x^) [0..]
--- expn x = zipWith (/) (powers x) 
 
-
+factorial:: (Integral a) => a -> a
+factorial n = product [1..n]
+expn :: Float -> [Float]
+expn x = [(x^y) / (fromIntegral (factorial y) :: Float)| y <- loops 0]
+loops :: Int -> [Int]
+loops n = n : loops (n+1)
 
 -- epsilon equality for floats; does not work if close to 0.0
 floatEq f1 f2 = (abs (f2 - f1)/f1) < 0.0001
